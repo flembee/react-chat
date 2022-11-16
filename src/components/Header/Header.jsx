@@ -1,27 +1,12 @@
 import React, { useRef, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
 
 import { Container } from "reactstrap";
-
-import en from '../../locales/en/messages.json';
-import es from '../../locales/es/messages.json';
-
-import {
-  getLanguage,
-  changeLanguage,
-} from '../../redux/actions';
 
 import logo from "../../assets/images/logo.png";
 
 import "./header.css";
 
 export function Header () {
-  const dispatch = useDispatch();
-
-  const {
-    language,
-  } = useSelector((state) => state.language);
-
   const headerRef = useRef(null);
   
   useEffect(() => {
@@ -40,21 +25,6 @@ export function Header () {
       };
   }, []);
 
-  useEffect(() => {
-      let isMounted = true;
-
-      if (isMounted) dispatch(getLanguage());
-
-      return () => {
-          isMounted = false;
-      };
-  }, [dispatch]);
-
-  const onChangeLanguage = async () => {
-    const lng = language === "English" ? {language: "Español", messages: es} : {language: "English", messages: en}
-    dispatch(changeLanguage(lng));
-  }
-
   return (
     <Container>
       <header className="header" ref={headerRef}>
@@ -66,11 +36,11 @@ export function Header () {
             <div className="nav__right d-flex align-items-center gap-5" style={{paddingLeft: "2rem"}}>
                 <div className="single__seller-card d-flex align-items-center gap-3">
                   <button className="btn d-flex gap-2 align-items-center"
-                          onClick={() => onChangeLanguage()}>
+                          onClick={() => window.open('https://github.com/flembee/react-chat/blob/main/README.md', '_blank')}>
                     <span>
-                      <i className="ri-global-line"></i>
+                      <i className="ri-github-line"></i>
                     </span>
-                    <span style={{color:" #000", textDecoration: "none", fontSize: "0.8rem"}}>{language}</span>
+                    <span style={{color:" #000", textDecoration: "none", fontSize: "0.8rem"}}>Documentation</span>
                   </button>
               </div>
             </div>

@@ -1,5 +1,6 @@
 #chat3 .form-control {
   border-color: transparent;
+  font-size: 14px;
 }
 
 #chat3 .form-control:focus {
@@ -13,4 +14,26 @@
   width: 10px;
   margin-left: 2.9rem;
   margin-top: -0.75rem;
+}
+
+.social__links span a {
+  text-decoration: none;
+  color: #000;
+  opacity: 85%;
+  font-size: 1.2rem;
+  font-weight: 400;
+  transition: 0.3s;
+}
+
+.social__links span span {
+  text-decoration: none;
+  color: #000;
+  opacity: 85%;
+  font-size: 1.2rem;
+  font-weight: 400;
+  transition: 0.3s;
+}
+
+.social__links span a:hover {
+  color: #eb6262;
 }
