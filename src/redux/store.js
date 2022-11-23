@@ -2,6 +2,8 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import {
     apiMdl,
+    channelsMdl,
+    messagesMdl,
     uploadsMdl,
     userMdl
 } from './middlewares';
@@ -14,6 +16,8 @@ if (process.env.NODE_ENV !== 'production') {
 export const store = configureStore({
     reducer: rootReducer,
     middleware: [
+        ...channelsMdl,
+        ...messagesMdl,
         ...uploadsMdl,
         ...userMdl,
         apiMdl

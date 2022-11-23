@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Container, Row, Col, List, InputGroup, Card, CardTitle, CardBody } from "reactstrap";
 
@@ -7,6 +8,11 @@ import dayjs from 'dayjs';
 import ScrollArea from 'react-scrollbar';
 
 import "./styles.css";
+
+import {
+  getChannelProcess,
+  getMessageProcess
+} from '../../redux/actions';
 
 const contacts =[
   {
@@ -53,58 +59,40 @@ const contacts =[
     },
 ]
 
-const messages = [
-  {
-    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    channelId: "636db6bba08b1b9439eca578",
-    userId: "635980d3aa69be4f60e32866",
-    createdAt: "2022-11-11T02:36:49.277+00:00"
-  },
-  {
-    message: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    channelId: "636db6bba08b1b9439eca578",
-    userId: "635980d3aa69be4f60e32867",
-    createdAt: "2022-11-11T02:36:49.277+00:00"
-  },
-  {
-    message: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    channelId: "636db6bba08b1b9439eca578",
-    userId: "635980d3aa69be4f60e32866",
-    createdAt: "2022-11-11T02:36:49.277+00:00"
-  },
-  {
-    message: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    channelId: "636db6bba08b1b9439eca578",
-    userId: "635980d3aa69be4f60e32867",
-    createdAt: "2022-11-11T02:36:49.277+00:00"
-  },
-  {
-    message: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-    channelId: "636db6bba08b1b9439eca578",
-    userId: "635980d3aa69be4f60e32866",
-    createdAt: "2022-11-11T02:36:49.277+00:00"
-  },
-  {
-    message: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
-    channelId: "636db6bba08b1b9439eca578",
-    userId: "635980d3aa69be4f60e32867",
-    createdAt: "2022-11-11T02:36:49.277+00:00"
-  },
-  {
-    message: "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.",
-    channelId: "636db6bba08b1b9439eca578",
-    userId: "635980d3aa69be4f60e32866",
-    createdAt: "2022-11-11T02:36:49.277+00:00"
-  },
-  {
-    message: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
-    channelId: "636db6bba08b1b9439eca578",
-    userId: "635980d3aa69be4f60e32867",
-    createdAt: "2022-11-11T02:36:49.277+00:00"
-  }
-]
-
 export function Chat() {
+
+    const dispatch = useDispatch();
+
+    const {
+      singleChannel,
+    } = useSelector((state) => state.channels);
+
+    const {
+      messages,
+    } = useSelector((state) => state.messages);
+
+    useEffect(() => {
+      let isMounted = true;
+
+      if (isMounted)
+        dispatch(getChannelProcess({id: "635980d3aa69be4f60e32866"}));
+
+      return () => {
+          isMounted = false;
+      };
+    }, [dispatch]);
+
+    useEffect(() => {
+      let isMounted = true;
+
+      if (isMounted && singleChannel._id)
+        dispatch(getMessageProcess({id: singleChannel._id}))
+
+      return () => {
+          isMounted = false;
+      };
+    }, [dispatch, singleChannel]);
+
   return (
     <Container style={{marginTop: "6rem", marginBottom: "8rem"}}>
       <Row>
@@ -174,7 +162,7 @@ export function Chat() {
                     style={{ position: "relative", height: "400px" }}
                   >
                     <List type="unstyled" className="mb-0 me-3">
-                      {contacts.length && contacts.map((data, key) =>
+                      {singleChannel && singleChannel.users?.map((data, key) =>
                         <li className="p-2 border-bottom" key={key}>
                           <a
                             href="#!" style={{textDecoration: "none"}}
@@ -183,7 +171,7 @@ export function Chat() {
                             <div className="d-flex flex-row">
                               <div>
                                 <img
-                                  src={data.avatar}
+                                  src={contacts[key].avatar}
                                   alt="avatar"
                                   className="d-flex align-self-center me-3"
                                   width="50"
@@ -220,7 +208,7 @@ export function Chat() {
                     className="pt-3 pe-3"
                   >
                     {messages.length && messages.map((data, key) =>
-                      (data.userId === '635980d3aa69be4f60e32866') 
+                      (data.userId._id !== '635980d3aa69be4f60e32866') 
                       ? <div className="d-flex flex-row justify-content-start" key={key}>
                           <img
                             src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
