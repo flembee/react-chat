@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Container, Row, Col, List, InputGroup, Card, CardTitle, CardBody } from "reactstrap";
@@ -6,6 +6,8 @@ import { Container, Row, Col, List, InputGroup, Card, CardTitle, CardBody } from
 import dayjs from 'dayjs';
 
 import ScrollArea from 'react-scrollbar';
+
+import { Modal } from "../../components";
 
 import "./styles.css";
 
@@ -63,6 +65,9 @@ export function Chat() {
 
     const dispatch = useDispatch();
 
+    const [modalHandler, setModalHandler] = useState(false);
+    const [channelData, setChannelData] = useState();
+
     const {
       singleChannel,
     } = useSelector((state) => state.channels);
@@ -85,16 +90,30 @@ export function Chat() {
     useEffect(() => {
       let isMounted = true;
 
-      if (isMounted && singleChannel._id)
-        dispatch(getMessageProcess({id: singleChannel._id}))
+      if (isMounted){
+        if(singleChannel._id)
+          dispatch(getMessageProcess({id: singleChannel._id}))
+        
+        if(singleChannel)
+          setChannelData(singleChannel);
+      }
 
       return () => {
           isMounted = false;
       };
     }, [dispatch, singleChannel]);
 
+    const handleSearch = (event) => {
+      let value = event.target.value.toLowerCase();
+      let result = [];
+      result = singleChannel.filter(channel => channel.users.name.toLowerCase().includes(value));
+
+      setChannelData(result);
+    }
+
   return (
     <Container style={{marginTop: "6rem", marginBottom: "8rem"}}>
+      {modalHandler && <Modal setModalHandler={setModalHandler} singleChannel={singleChannel} messages={messages} />}
       <Row>
         <Col md="12">
           <Card id="chat3" style={{ borderRadius: "15px" }}>
@@ -106,13 +125,17 @@ export function Chat() {
                         className="form-control rounded ms-3"
                         placeholder="Search"
                         type="search"
+                        onChange={(e) => handleSearch(e)}
                         style={{ backgroundColor: "#f5f6f7" }}
                       />
                       <div className="social__links d-flex gap-3 ms-1 me-3 align-items-center ">
-                        <span>
                           <span className="ms-1 text-muted" href="/">
                             <i className="ri-search-line"></i>
                           </span>
+                      </div>
+                      <div className="social__links d-flex gap-3 me-2 align-items-center ">
+                        <span className="fake-link" onClick={() => setModalHandler(true)}>
+                          <i className="ri-chat-new-line"></i>
                         </span>
                       </div>
                     </InputGroup>
@@ -162,7 +185,7 @@ export function Chat() {
                     style={{ position: "relative", height: "400px" }}
                   >
                     <List type="unstyled" className="mb-0 me-3">
-                      {singleChannel && singleChannel.users?.map((data, key) =>
+                      {channelData && channelData.map((data, key) =>
                         <li className="p-2 border-bottom" key={key}>
                           <a
                             href="#!" style={{textDecoration: "none"}}
@@ -179,7 +202,7 @@ export function Chat() {
                                 <span className="badge bg-warning badge-dot"></span>
                               </div>
                               <div className="pt-1">
-                                <p className="fw-bold mb-0">{data.name}</p>
+                                <p className="fw-bold mb-0">{data.users.name}</p>
                                 <p className="small text-muted">
                                   {data.message}
                                 </p>

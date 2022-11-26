@@ -1,0 +1,56 @@
+.modal__wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #14141f8a;
+    z-index: 4444444;
+  }
+  
+  .single__modal {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 500px;
+    transform: translate(-50%, -50%);
+    background: #fff !important;
+    border-radius: 5px;
+    border: 1px solid #eb6262;
+    z-index: 5555555 !important;
+    cursor: pointer;
+  }
+  
+  .single__modal h5 {
+    font-weight: 500;
+    margin-top: 25px;
+    margin-bottom: 20px;
+  }
+    
+  .close__modal {
+    position: absolute;
+    right: -2px;
+    z-index: 6666666;
+  }
+  
+  .close__modal i {
+    padding: 5px;
+    color: #000;
+    font-size: x-large;
+  }
+  
+  @media only screen and (max-width: 992px) {
+    .single__modal {
+      width: 300px;
+      height: auto;
+    }
+  
+    .single__modal h5 {
+      font-size: 0.9rem;
+    }
+    .single__modal p {
+      font-size: 0.8rem;
+      margin-bottom: 0;
+    }
+  }

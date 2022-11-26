@@ -20,7 +20,7 @@ import {
 const initialState = {
     channels: [],
     isFetching: true,
-    singleChannel: {},
+    singleChannel: [],
     deleteChannelModal: {
         modal: false,
         cId: null,
@@ -52,7 +52,10 @@ export const channels = (state = initialState, action = {}) => {
         case FETCH_CHANNEL_SUCCESS:
             return {
                 ...state,
-                singleChannel: action.payload,
+                singleChannel: action.payload.map((channel) => ({
+                    ...channel,
+                    users: channel.users[0]
+                })),
                 isFetching: false,
             };
         case DELETE_CHANNELS_PROCESS:
