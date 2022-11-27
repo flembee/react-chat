@@ -16,15 +16,6 @@
   margin-top: -0.75rem;
 }
 
-.social__links span a {
-  text-decoration: none;
-  color: #000;
-  opacity: 85%;
-  font-size: 1.2rem;
-  font-weight: 400;
-  transition: 0.3s;
-}
-
 .social__links span span {
   text-decoration: none;
   color: #000;
