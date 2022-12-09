@@ -6,9 +6,9 @@ import ScrollArea from 'react-scrollbar';
 
 import "./styles.css";
 
-export function Modal ({setModalHandler, singleChannel}) {
+export function CreateChatModal ({setModalHandler, userContacts}) {
 
-  const [channelData, setChannelData] = useState(singleChannel);
+  const [contactsData, setContactsData] = useState(userContacts);
 
   const contacts =[
     {
@@ -58,9 +58,9 @@ export function Modal ({setModalHandler, singleChannel}) {
   const handleSearch = (event) => {
     let value = event.target.value.toLowerCase();
     let result = [];
-    result = singleChannel.filter(channel => channel.users.name.toLowerCase().includes(value));
+    result = userContacts.filter(user => user.name.toLowerCase().includes(value));
 
-    setChannelData(result);
+    setContactsData(result);
   }
 
   return (
@@ -95,7 +95,7 @@ export function Modal ({setModalHandler, singleChannel}) {
                 style={{ position: "relative", height: "400px" }}
               >
                 <List type="unstyled" className="mb-0 me-3">
-                  {channelData && channelData.map((data, key) =>
+                  {contactsData && contactsData.map((data, key) =>
                     <li className="p-2 border-bottom" key={key}>
                       <a
                         href="#!" style={{textDecoration: "none"}}
@@ -112,21 +112,8 @@ export function Modal ({setModalHandler, singleChannel}) {
                             <span className="badge bg-warning badge-dot"></span>
                           </div>
                           <div className="pt-1">
-                            <p className="fw-bold mb-0">{data.users.name}</p>
-                            <p className="small text-muted">
-                              {data.message}
-                            </p>
+                            <p className="fw-bold mb-0">{data.name}</p>
                           </div>
-                        </div>
-                        <div className="pt-1">
-                          <p className="small text-muted mb-1">
-                            {data.time}
-                          </p>
-                          { (data.unreadMessages > 0) && 
-                            <span className="badge bg-danger rounded-pill float-end">
-                              {data.unreadMessages}
-                            </span>
-                          }
                         </div>
                       </a>
                     </li>

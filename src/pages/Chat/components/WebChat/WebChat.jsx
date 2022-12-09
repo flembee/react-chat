@@ -6,15 +6,17 @@ import dayjs from 'dayjs';
 
 import ScrollArea from 'react-scrollbar';
 
-import { Modal } from "../../../../components";
+import { CreateChatModal, AddContactModal } from "../../../../components";
 
 import "./styles.css";
 
 export function WebChat({props}) {
 
-    const { singleChannel, channelData, setChannelData, contacts, messages } = props;
+    const { userContacts, singleChannel, channelData, setChannelData, contacts, messages } = props;
 
-    const [modalHandler, setModalHandler] = useState(false);
+    const [createChatModalHandler, setCreateChatModalHandler] = useState(false);
+
+    const [addContactModalHandler, setAddContactModalHandler] = useState(false);
 
     const handleSearch = (event) => {
       let value = event.target.value.toLowerCase();
@@ -37,13 +39,13 @@ export function WebChat({props}) {
                 style={{ backgroundColor: "#f5f6f7" }}
               />
               <div className="social__links d-flex gap-3 ms-1 me-3 align-items-center ">
-                  <span className="ms-1 text-muted" href="/">
-                    <i className="ri-search-line"></i>
-                  </span>
-              </div>
-              <div className="social__links d-flex gap-3 me-1 align-items-center ">
-                <span className="fake-link" onClick={() => setModalHandler(true)}>
+                <span className="fake-link" onClick={() => setCreateChatModalHandler(true)}>
                   <i className="ri-chat-new-line"></i>
+                </span>
+            </div>
+              <div className="social__links d-flex gap-3 me-1 align-items-center ">
+                <span className="fake-link" onClick={() => setAddContactModalHandler(true)}>
+                  <i className="ri-user-add-line"></i>
                 </span>
               </div>
             </div>
@@ -200,7 +202,8 @@ export function WebChat({props}) {
 
     return (
       <>
-        {modalHandler && <Modal setModalHandler={setModalHandler} singleChannel={singleChannel} messages={messages} />}
+        {createChatModalHandler && <CreateChatModal setModalHandler={setCreateChatModalHandler} userContacts={userContacts} />}
+        {addContactModalHandler && <AddContactModal setModalHandler={setAddContactModalHandler} />}
         <Row>
           <ChannelsCanva />
           <MessagesCanva />

@@ -14,6 +14,9 @@ import {
     UPDATE_PASSWORD_ERROR,
     UPDATE_PASSWORD_PROCESS,
     USER_LOGOUT,
+    FETCH_CONTACTS_PROCESS,
+    FETCH_CONTACTS_SUCCESS,
+    FETCH_CONTACTS_ERROR,
 } from '../constants';
 
 import { apiRequest, showMessageLoading, hideMessage } from '../actions';
@@ -171,6 +174,35 @@ export const logoutSuccess = ({dispatch}) => (next) => (action) => {
     }
 };
 
+export const getContactsProcess = ({ dispatch }) => (next) => (action) => {
+    next(action);
+    if (action.type === FETCH_CONTACTS_PROCESS) {
+        const { id } = action.payload;
+        dispatch(
+            apiRequest(
+                'GET',
+                `${USER_URL}contacts/${id}`,
+                null,
+                FETCH_CONTACTS_SUCCESS,
+                FETCH_CONTACTS_ERROR,
+            )
+        );
+        dispatch(showMessageLoading());
+    }
+};
+
+export const getContactsSuccess = () => (next) => (action) => {
+    next(action);
+};
+
+export const gectContactsReject = ({ dispatch }) => (next) => (action) => {
+    next(action);
+    if (action.type === FETCH_CONTACTS_ERROR) {
+        message.error('Invalid data!', 1);
+        dispatch(hideMessage());
+    }
+};
+
 export const userMdl = [
     loginProcess, 
     loginSucess, 
@@ -185,4 +217,7 @@ export const userMdl = [
     updatePasswordSucess, 
     updatePasswordError, 
     logoutSuccess,
+    getContactsProcess,
+    getContactsSuccess,
+    gectContactsReject,
 ];

@@ -12,12 +12,15 @@ import {
     UPDATE_USER_PROCESS,
     UPDATE_PASSWORD_PROCESS,
     UPDATE_PASSWORD_SUCCESS,
+    FETCH_CONTACTS_PROCESS,
+    FETCH_CONTACTS_SUCCESS,
 } from '../constants';
 
 const initialState = {
     isFetching: true,
     isAuthenticated: false,
     user: {},
+    userContacts: [],
     error: null,
 };
 
@@ -92,6 +95,17 @@ export const user = (state = initialState, action = {}) => {
                 user: action.payload,
                 isFetching: false,
                 error: null,
+            };
+        case FETCH_CONTACTS_PROCESS:
+            return {
+                ...state,
+                isFetching: true,
+            };
+        case FETCH_CONTACTS_SUCCESS:
+            return {
+                ...state,
+                userContacts: action.payload,
+                isFetching: false,
             };
         default:
             return state;

@@ -6,6 +6,7 @@ import { Container } from "reactstrap";
 import { MobileChat, WebChat } from "./components";
 
 import {
+  getContactsProcess,
   getChannelProcess,
   getMessageProcess
 } from '../../redux/actions';
@@ -69,6 +70,21 @@ export function Chat() {
       messages,
     } = useSelector((state) => state.messages);
 
+    const {
+      userContacts,
+    } = useSelector((state) => state.user);
+
+    useEffect(() => {
+      let isMounted = true;
+
+      if (isMounted)
+        dispatch(getContactsProcess({id: "635980d3aa69be4f60e32866"}));
+
+      return () => {
+          isMounted = false;
+      };
+    }, [dispatch]);
+
     useEffect(() => {
       let isMounted = true;
 
@@ -109,8 +125,8 @@ export function Chat() {
 
     return (
       <Container style={{marginTop: "6rem", marginBottom: "8rem"}}>
-        {/* <WebChat props={{singleChannel, channelData, setChannelData, contacts, messages}} /> */}
-        <MobileChat props={{singleChannel, channelData, setChannelData, contacts, messages}} />
+        <WebChat props={{userContacts, singleChannel, channelData, setChannelData, contacts, messages}} />
+        {/* <MobileChat props={{userContacts, singleChannel, channelData, setChannelData, contacts, messages}} /> */}
       </Container>
     );
 }

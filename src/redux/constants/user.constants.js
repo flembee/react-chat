@@ -17,6 +17,10 @@ const UPDATE_PASSWORD_PROCESS = '[auth] Process Update Password';
 const UPDATE_PASSWORD_SUCCESS = '[auth] Success Update Password';
 const UPDATE_PASSWORD_ERROR = '[auth] Error Update Password';
 
+const FETCH_CONTACTS_PROCESS = '[users] Process Get Contacts List';
+const FETCH_CONTACTS_SUCCESS = '[users] Success Get Contacts List';
+const FETCH_CONTACTS_ERROR = '[users] Error Get Contacts List';
+
 export {
     FETCH_USER_SUCCESS,
     FETCH_USER_ERROR,
@@ -32,4 +36,7 @@ export {
     UPDATE_USER_ERROR,
     USER_LOGOUT,
     GET_USER_FROM_STORAGE,
+    FETCH_CONTACTS_PROCESS,
+    FETCH_CONTACTS_SUCCESS,
+    FETCH_CONTACTS_ERROR,
 };
