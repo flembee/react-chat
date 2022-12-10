@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { InputGroup, Card, CardTitle, CardBody } from "reactstrap";
 
@@ -20,8 +20,6 @@ export function AddContactModal ({setModalHandler, userId}) {
   } = useSelector((state) => state.user);
 
   const [emailInput, setEmailInput] = useState('');
-
-  // const [contactIsAdded, setContactIsAdded] = useState(false);
 
   function checkIfEmail(str) {
     // Regular expression to check if string is email

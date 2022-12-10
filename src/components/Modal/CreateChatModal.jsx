@@ -72,56 +72,55 @@ export function CreateChatModal ({setModalHandler, userContacts}) {
           </span>
         </div>
         <Card id="chat3">
-            <CardTitle className="border-bottom">
+          <CardTitle className="border-bottom">
             <h5 className="text-center">New Chat</h5>
-              <InputGroup className="rounded mb-3">
-                <input
-                  className="form-control rounded ms-3"
-                  placeholder="Search"
-                  type="search"
-                  onChange={(e) => handleSearch(e)}
-                  style={{ backgroundColor: "#f5f6f7" }}
-                />
-                <div className="social__links d-flex gap-3 ms-1 me-3 align-items-center ">
-                  <span className="ms-1 text-muted" href="/">
-                    <i className="ri-search-line"></i>
-                  </span>
-                </div>
-              </InputGroup>
-            </CardTitle>
-            <CardBody>
-              <ScrollArea
-                suppressscrollx="true"
-                style={{ position: "relative", height: "400px" }}
-              >
-                <List type="unstyled" className="mb-0 me-3">
-                  {contactsData && contactsData.map((data, key) =>
-                    <li className="p-2 border-bottom" key={key}>
-                      <a
-                        href="#!" style={{textDecoration: "none"}}
-                        className="d-flex justify-content-between"
-                      >
-                        <div className="d-flex flex-row">
-                          <div>
-                            <img
-                              src={contacts[key].avatar}
-                              alt="avatar"
-                              className="d-flex align-self-center me-3"
-                              width="50"
-                            />
-                            <span className="badge bg-warning badge-dot"></span>
-                          </div>
-                          <div className="pt-1">
-                            <p className="fw-bold mb-0">{data.name}</p>
-                          </div>
+            <InputGroup className="rounded mb-3">
+              <input
+                className="form-control rounded ms-3"
+                placeholder="Search"
+                type="search"
+                onChange={(e) => handleSearch(e)}
+                style={{ backgroundColor: "#f5f6f7" }}
+              />
+              <div className="social__links d-flex gap-3 ms-1 me-3 align-items-center ">
+                <span className="ms-1 text-muted" href="/">
+                  <i className="ri-search-line"></i>
+                </span>
+              </div>
+            </InputGroup>
+          </CardTitle>
+          <CardBody>
+            <ScrollArea
+              style={{ position: "relative", height: "400px" }}
+            >
+              <List type="unstyled" className="mb-0 me-3">
+                {contactsData && contactsData.map((data, key) =>
+                  <li className="p-2 border-bottom" key={key}>
+                    <a
+                      href="#!" style={{textDecoration: "none"}}
+                      className="d-flex justify-content-between"
+                    >
+                      <div className="d-flex flex-row">
+                        <div>
+                          <img
+                            src={contacts[key].avatar}
+                            alt="avatar"
+                            className="d-flex align-self-center me-3"
+                            width="50"
+                          />
+                          <span className="badge bg-warning badge-dot"></span>
                         </div>
-                      </a>
-                    </li>
-                  )}
-                </List>
-              </ScrollArea>
-            </CardBody>
-          </Card>
+                        <div className="pt-1">
+                          <p className="fw-bold mb-0">{data.name}</p>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                )}
+              </List>
+            </ScrollArea>
+          </CardBody>
+        </Card>
       </div>
     </div>
   );

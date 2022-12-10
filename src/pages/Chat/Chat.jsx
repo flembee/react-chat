@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Container } from "reactstrap";
@@ -60,8 +60,6 @@ export function Chat() {
 
     const dispatch = useDispatch();
 
-    const [channelData, setChannelData] = useState();
-
     const userId = "635980d3aa69be4f60e32866";
 
     const {
@@ -112,13 +110,8 @@ export function Chat() {
     useEffect(() => {
       let isMounted = true;
 
-      if (isMounted){
-        if(singleChannel._id)
-          dispatch(getMessageProcess({id: singleChannel._id}))
-        
-        if(singleChannel)
-          setChannelData(singleChannel);
-      }
+      if (isMounted && singleChannel._id)
+        dispatch(getMessageProcess({id: singleChannel._id}))
 
       return () => {
           isMounted = false;
@@ -127,8 +120,8 @@ export function Chat() {
 
     return (
       <Container style={{marginTop: "6rem", marginBottom: "8rem"}}>
-        <WebChat props={{userId, userContacts, singleChannel, channelData, setChannelData, contacts, messages}} />
-        {/* <MobileChat props={{userId, userContacts, singleChannel, channelData, setChannelData, contacts, messages}} /> */}
+        {singleChannel && singleChannel.length && <WebChat props={{userId, userContacts, singleChannel, contacts, messages}} />}
+        {/* {singleChannel && singleChannel.length && <MobileChat props={{userId, userContacts, singleChannel, contacts, messages}} />} */}
       </Container>
     );
 }

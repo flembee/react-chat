@@ -15,7 +15,9 @@ import "./styles.css";
 
 export function MobileChat({props}) {
 
-    const { userId, userContacts, singleChannel, channelData, setChannelData, contacts, messages } = props;
+    const { userId, userContacts, singleChannel, contacts, messages } = props;
+
+    const [channelData, setChannelData] = useState(singleChannel);
 
     const [openChat, setOpenChat] = useState(true);
 

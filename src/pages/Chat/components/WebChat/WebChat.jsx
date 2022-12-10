@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Container, Row, Col, List, Card, CardTitle, CardBody, CardHeader } from "reactstrap";
+import { Row, Col, List, Card, InputGroup, CardTitle, CardBody, CardHeader } from "reactstrap";
 
 import dayjs from 'dayjs';
 
@@ -10,18 +10,24 @@ import { CreateChatModal, AddContactModal } from "../../../../components";
 
 import "./styles.css";
 
+import chat_default from '../../../../assets/images/chat_default.png';
+
 export function WebChat({props}) {
 
-    const { userId, userContacts, singleChannel, channelData, setChannelData, contacts, messages } = props;
+    const { userId, userContacts, singleChannel, contacts, messages } = props;
+
+    const [channelData, setChannelData] = useState(singleChannel);
 
     const [createChatModalHandler, setCreateChatModalHandler] = useState(false);
 
     const [addContactModalHandler, setAddContactModalHandler] = useState(false);
 
+    const [chatSelected, setChatSelected] = useState(false);
+
     const handleSearch = (event) => {
       let value = event.target.value.toLowerCase();
       let result = [];
-      result = singleChannel.filter(channel => channel.users.name.toLowerCase().includes(value));
+      result = singleChannel.filter(user => user.users.name.toLowerCase().includes(value));
 
       setChannelData(result);
     }
@@ -31,34 +37,37 @@ export function WebChat({props}) {
         <Card id="chat3" style={{ borderRadius: "15px" }}>
           <CardTitle className="border-bottom">
             <div className="d-flex justify-content-between m-3">
-              <input
-                className="form-control rounded"
-                placeholder="Search"
-                type="search"
-                onChange={(e) => handleSearch(e)}
-                style={{ backgroundColor: "#f5f6f7" }}
-              />
-              <div className="social__links d-flex gap-3 ms-1 me-3 align-items-center ">
-                <span className="fake-link" onClick={() => setCreateChatModalHandler(true)}>
-                  <i className="ri-chat-new-line"></i>
-                </span>
-            </div>
-              <div className="social__links d-flex gap-3 me-1 align-items-center ">
-                <span className="fake-link" onClick={() => setAddContactModalHandler(true)}>
-                  <i className="ri-user-add-line"></i>
-                </span>
-              </div>
+              <InputGroup className="rounded mb-3">
+                <input
+                  className="form-control rounded"
+                  placeholder="Search"
+                  type="search"
+                  onChange={(e) => handleSearch(e)}
+                  style={{ backgroundColor: "#f5f6f7" }}
+                />
+                <div className="social__links d-flex gap-3 ms-1 me-3 align-items-center ">
+                  <span className="fake-link" onClick={() => setCreateChatModalHandler(true)}>
+                    <i className="ri-chat-new-line"></i>
+                  </span>
+                </div>
+                <div className="social__links d-flex gap-3 me-1 align-items-center ">
+                  <span className="fake-link" onClick={() => setAddContactModalHandler(true)}>
+                    <i className="ri-user-add-line"></i>
+                  </span>
+                </div>
+              </InputGroup>
             </div>
           </CardTitle>
           <CardBody>
             <ScrollArea style={{ position: "relative", height: "400px" }}>
               <List type="unstyled" className="mb-0 me-3">
                 {channelData && channelData.map((data, key) =>
-                  <li className="p-2 border-bottom" key={key}>
-                    <a
-                      href="#!" style={{textDecoration: "none"}}
-                      className="d-flex justify-content-between"
-                    >
+                  <li className="p-2 border-bottom"
+                      style={{backgroundColor: `${chatSelected === key ? "#cfe4f5" : "none"}`, cursor: "pointer"}} 
+                      key={key}
+                      onClick={()=> setChatSelected(key)}
+                  >
+                    <div className="d-flex justify-content-between">
                       <div className="d-flex flex-row">
                         <div>
                           <img
@@ -86,7 +95,7 @@ export function WebChat({props}) {
                           </span>
                         }
                       </div>
-                    </a>
+                    </div>
                   </li>
                 )}
               </List>
@@ -94,6 +103,19 @@ export function WebChat({props}) {
           </CardBody>
         </Card>
       </ Col>
+    );
+
+    const DefaultCanva = () => (
+      <Col md="6" lg="7" xl="8">
+        <Card id="chat3" 
+          style={{ 
+            alignItems: "center", 
+            justifyContent: "center", 
+            borderRadius: "15px", 
+            height: "100%" }}>
+          <img src={chat_default} width="550" height="450" alt="cdefault" />
+        </Card>
+      </Col>
     );
 
     const MessagesCanva = () => (
@@ -104,7 +126,7 @@ export function WebChat({props}) {
               <div className="d-flex flex-row ms-3">
                 <div>
                   <img
-                    src={contacts[0].avatar}
+                    src={contacts[chatSelected].avatar}
                     alt="avatar"
                     className="d-flex align-self-center me-3"
                     width="50"
@@ -112,18 +134,8 @@ export function WebChat({props}) {
                   <span className="badge bg-warning badge-dot"></span>
                 </div>
                 <div className="pt-1">
-                  <p className="fw-bold mb-0">{contacts[0].name}</p>
+                  <p className="fw-bold mb-0">{channelData[chatSelected].users.name}</p>
                 </div>
-              </div>
-              <div className="pt-1 me-3">
-                <p className="small text-muted">
-                  {contacts[0].time}
-                </p>
-                { (contacts[0].unreadMessages > 0) && 
-                  <span className="badge bg-danger rounded-pill float-end">
-                    {contacts[0].unreadMessages}
-                  </span>
-                }
               </div>
             </div>
           </CardHeader>
@@ -206,7 +218,8 @@ export function WebChat({props}) {
         {addContactModalHandler && <AddContactModal setModalHandler={setAddContactModalHandler} userId={userId} />}
         <Row>
           <ChannelsCanva />
-          <MessagesCanva />
+          {chatSelected === false && <DefaultCanva />}
+          {chatSelected !== false && <MessagesCanva />}
         </Row>
       </>
     );
