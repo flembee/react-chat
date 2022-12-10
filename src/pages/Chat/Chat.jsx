@@ -62,6 +62,8 @@ export function Chat() {
 
     const [channelData, setChannelData] = useState();
 
+    const userId = "635980d3aa69be4f60e32866";
+
     const {
       singleChannel,
     } = useSelector((state) => state.channels);
@@ -78,7 +80,7 @@ export function Chat() {
       let isMounted = true;
 
       if (isMounted)
-        dispatch(getContactsProcess({id: "635980d3aa69be4f60e32866"}));
+        dispatch(getContactsProcess({id: userId}));
 
       return () => {
           isMounted = false;
@@ -89,7 +91,7 @@ export function Chat() {
       let isMounted = true;
 
       if (isMounted)
-        dispatch(getChannelProcess({id: "635980d3aa69be4f60e32866"}));
+        dispatch(getChannelProcess({id: userId}));
 
       return () => {
           isMounted = false;
@@ -125,8 +127,8 @@ export function Chat() {
 
     return (
       <Container style={{marginTop: "6rem", marginBottom: "8rem"}}>
-        <WebChat props={{userContacts, singleChannel, channelData, setChannelData, contacts, messages}} />
-        {/* <MobileChat props={{userContacts, singleChannel, channelData, setChannelData, contacts, messages}} /> */}
+        <WebChat props={{userId, userContacts, singleChannel, channelData, setChannelData, contacts, messages}} />
+        {/* <MobileChat props={{userId, userContacts, singleChannel, channelData, setChannelData, contacts, messages}} /> */}
       </Container>
     );
 }

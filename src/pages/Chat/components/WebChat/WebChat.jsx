@@ -12,7 +12,7 @@ import "./styles.css";
 
 export function WebChat({props}) {
 
-    const { userContacts, singleChannel, channelData, setChannelData, contacts, messages } = props;
+    const { userId, userContacts, singleChannel, channelData, setChannelData, contacts, messages } = props;
 
     const [createChatModalHandler, setCreateChatModalHandler] = useState(false);
 
@@ -130,7 +130,7 @@ export function WebChat({props}) {
           <CardBody>
             <ScrollArea style={{ position: "relative", height: "400px" }}>
               {messages.length && messages.map((data, key) =>
-                (data.userId._id !== '635980d3aa69be4f60e32866') 
+                (data.userId._id !== userId) 
                 ? <div className="d-flex flex-row justify-content-start" key={key}>
                     <img
                       src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
@@ -203,7 +203,7 @@ export function WebChat({props}) {
     return (
       <>
         {createChatModalHandler && <CreateChatModal setModalHandler={setCreateChatModalHandler} userContacts={userContacts} />}
-        {addContactModalHandler && <AddContactModal setModalHandler={setAddContactModalHandler} />}
+        {addContactModalHandler && <AddContactModal setModalHandler={setAddContactModalHandler} userId={userId} />}
         <Row>
           <ChannelsCanva />
           <MessagesCanva />

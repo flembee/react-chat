@@ -5,7 +5,8 @@ import {
     GET_USER_FROM_STORAGE,
     UPDATE_USER_PROCESS,
     UPDATE_PASSWORD_PROCESS,
-    FETCH_CONTACTS_PROCESS
+    FETCH_CONTACTS_PROCESS,
+    ADD_CONTACT_PROCESS,
 } from '../constants';
 
 const loginUser = (payload) => ({
@@ -42,6 +43,11 @@ const getContactsProcess = (payload) => ({
     payload,
 });
 
+const addContactProcess = (payload) => ({
+    type: ADD_CONTACT_PROCESS,
+    payload,
+});
+
 export { loginUser, 
         registerUser, 
         logoutUser, 
@@ -49,4 +55,5 @@ export { loginUser,
         updateUser, 
         updatePassword,
         getContactsProcess,
+        addContactProcess,
     };

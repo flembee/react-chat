@@ -15,7 +15,7 @@ import "./styles.css";
 
 export function MobileChat({props}) {
 
-    const { userContacts, singleChannel, channelData, setChannelData, contacts, messages } = props;
+    const { userId, userContacts, singleChannel, channelData, setChannelData, contacts, messages } = props;
 
     const [openChat, setOpenChat] = useState(true);
 
@@ -250,7 +250,7 @@ export function MobileChat({props}) {
   return (
     <>
       {createChatModalHandler && <CreateChatModal setModalHandler={setCreateChatModalHandler} userContacts={userContacts} messages={messages} />}
-      {addContactModalHandler && <AddContactModal setModalHandler={setAddContactModalHandler} />}
+      {addContactModalHandler && <AddContactModal setModalHandler={setAddContactModalHandler} userId={userId} />}
       <Row className="d-flex justify-content-center">
       <SwitchTransition mode="out-in">
           <CSSTransition

@@ -1,12 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { List, InputGroup, Card, CardTitle, CardBody } from "reactstrap";
+import { InputGroup, Card, CardTitle, CardBody } from "reactstrap";
+
+import { useSelector, useDispatch } from 'react-redux';
+
 
 import "./styles.css";
 
-export function AddContactModal ({setModalHandler}) {
+import {
+  addContactProcess,
+} from '../../redux/actions';
+
+export function AddContactModal ({setModalHandler, userId}) {
+
+  const dispatch = useDispatch();
+
+  const {
+    contactAdded
+  } = useSelector((state) => state.user);
 
   const [emailInput, setEmailInput] = useState('');
+
+  // const [contactIsAdded, setContactIsAdded] = useState(false);
 
   function checkIfEmail(str) {
     // Regular expression to check if string is email
@@ -20,9 +35,10 @@ export function AddContactModal ({setModalHandler}) {
     setEmailInput(value);
   }
 
-  const addContact = () => {
+  const addContact = async() => {
     if(emailInput && checkIfEmail(emailInput))
-      console.log(emailInput)
+      dispatch(addContactProcess({id: userId, email: emailInput}))
+    setEmailInput('');
   }
 
   return (
@@ -42,6 +58,7 @@ export function AddContactModal ({setModalHandler}) {
                   <input
                     className="form-control rounded ms-3"
                     placeholder="Enter email"
+                    value={emailInput}
                     onChange={(e) => handleInput(e)}
                     style={{ backgroundColor: "#f5f6f7" }}
                   />
@@ -51,9 +68,15 @@ export function AddContactModal ({setModalHandler}) {
                     </span>
                   </div>
                 </InputGroup>
-                {/* {userExists && 
+                {contactAdded === false && 
                   <p className='m-0 mb-3 text-center' style={{color: 'red'}}>User does not exists</p>
-                } */}
+                }
+                {contactAdded === true && 
+                  <p className='m-0 mb-3 text-center' style={{color: 'green'}}>This user is already in your contacts</p>
+                }
+                {(contactAdded && contactAdded._id) &&
+                  <p className='m-0 mb-3 text-center' style={{color: 'green'}}>User added to your contacts list</p>
+                }
             </CardBody>
           </Card>
       </div>

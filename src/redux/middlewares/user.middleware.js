@@ -17,6 +17,9 @@ import {
     FETCH_CONTACTS_PROCESS,
     FETCH_CONTACTS_SUCCESS,
     FETCH_CONTACTS_ERROR,
+    ADD_CONTACT_SUCCESS,
+    ADD_CONTACT_ERROR,
+    ADD_CONTACT_PROCESS
 } from '../constants';
 
 import { apiRequest, showMessageLoading, hideMessage } from '../actions';
@@ -195,9 +198,38 @@ export const getContactsSuccess = () => (next) => (action) => {
     next(action);
 };
 
-export const gectContactsReject = ({ dispatch }) => (next) => (action) => {
+export const getContactsReject = ({ dispatch }) => (next) => (action) => {
     next(action);
     if (action.type === FETCH_CONTACTS_ERROR) {
+        message.error('Invalid data!', 1);
+        dispatch(hideMessage());
+    }
+};
+
+export const addContactProcess = ({ dispatch }) => (next) => (action) => {
+    next(action);
+    if (action.type === ADD_CONTACT_PROCESS) {
+        const { id } = action.payload;
+        dispatch(
+            apiRequest(
+                'POST',
+                `${USER_URL}contacts/${id}`,
+                action.payload,
+                ADD_CONTACT_SUCCESS,
+                ADD_CONTACT_ERROR
+            )
+        );
+        dispatch(showMessageLoading());
+    }
+};
+
+export const addContactSuccess = () => (next) => (action) => {
+    next(action);
+};
+
+export const addContactReject = ({ dispatch }) => (next) => (action) => {
+    next(action);
+    if (action.type === ADD_CONTACT_ERROR) {
         message.error('Invalid data!', 1);
         dispatch(hideMessage());
     }
@@ -219,5 +251,8 @@ export const userMdl = [
     logoutSuccess,
     getContactsProcess,
     getContactsSuccess,
-    gectContactsReject,
+    getContactsReject,
+    addContactProcess,
+    addContactSuccess,
+    addContactReject,
 ];

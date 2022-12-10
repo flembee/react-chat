@@ -21,6 +21,10 @@ const FETCH_CONTACTS_PROCESS = '[users] Process Get Contacts List';
 const FETCH_CONTACTS_SUCCESS = '[users] Success Get Contacts List';
 const FETCH_CONTACTS_ERROR = '[users] Error Get Contacts List';
 
+const ADD_CONTACT_SUCCESS = '[users] Add Contact Success';
+const ADD_CONTACT_ERROR = '[users] Add Contact Error';
+const ADD_CONTACT_PROCESS = '[users] Add Contact Process';
+
 export {
     FETCH_USER_SUCCESS,
     FETCH_USER_ERROR,
@@ -39,4 +43,7 @@ export {
     FETCH_CONTACTS_PROCESS,
     FETCH_CONTACTS_SUCCESS,
     FETCH_CONTACTS_ERROR,
+    ADD_CONTACT_SUCCESS,
+    ADD_CONTACT_ERROR,
+    ADD_CONTACT_PROCESS
 };
