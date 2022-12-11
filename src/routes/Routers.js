@@ -2,13 +2,13 @@ import React from "react";
 
 import { Routes, Route } from "react-router-dom";
 
-import { Chat } from "../pages";
+import { Authentication, Chat } from "../pages";
 
 const Routers = () => {
   return (
     <Routes>
+      <Route path="/" element={<Authentication />} />
       <Route path="/" element={<Chat />} />
-      <Route path="/rooms/:roomId" element={<Chat />} />
     </Routes>
   );
 };

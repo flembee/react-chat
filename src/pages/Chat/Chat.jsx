@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Container } from "reactstrap";
@@ -60,6 +61,8 @@ export function Chat() {
 
     const dispatch = useDispatch();
 
+    const [isMobile, setIsMobile] = useState(false)
+
     const userId = "635980d3aa69be4f60e32866";
 
     const {
@@ -118,10 +121,28 @@ export function Chat() {
       };
     }, [dispatch, singleChannel]);
 
+      const handleResize = () => {
+        if (window.innerWidth < 720) {
+            setIsMobile(true)
+        } else {
+            setIsMobile(false)
+        }
+      }
+
+      useEffect(() => {
+        window.addEventListener("resize", handleResize)
+      })
+
+    const renderView = () =>{
+      return (isMobile ? <MobileChat props={{userId, userContacts, singleChannel, contacts, messages}} />
+               : <WebChat props={{userId, userContacts, singleChannel, contacts, messages}} />)
+    }
+
     return (
       <Container style={{marginTop: "6rem", marginBottom: "8rem"}}>
-        {singleChannel && singleChannel.length && <WebChat props={{userId, userContacts, singleChannel, contacts, messages}} />}
-        {/* {singleChannel && singleChannel.length && <MobileChat props={{userId, userContacts, singleChannel, contacts, messages}} />} */}
+        {
+          singleChannel && singleChannel.length && renderView()
+        }
       </Container>
     );
 }

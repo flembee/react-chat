@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Button, Container, Row, Col, List, Card, CardTitle, CardBody, CardHeader } from "reactstrap";
+import { Row, Col, List, Card, CardTitle, CardBody, CardHeader } from "reactstrap";
 
 import dayjs from 'dayjs';
 
@@ -129,121 +129,76 @@ export function MobileChat({props}) {
                   <p className="fw-bold mb-0">{channelSelected.users.name}</p>
                 </div>
               </div>
-              <div className="pt-1">
-                <p className="small text-muted">
-                  {contacts[0].time}
-                </p>
-                { (contacts[0].unreadMessages > 0) && 
-                  <span className="badge bg-danger rounded-pill float-end">
-                    {contacts[0].unreadMessages}
-                  </span>
-                }
-              </div>
             </div>
           </CardHeader>
-
           <CardBody>
-            <div className="d-flex flex-row justify-content-start mb-4">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                alt="avatar 1"
-                style={{ width: "40px", height: "100%" }}
-              />
-              <div
-                className="p-3 ms-3"
-                style={{
-                  borderRadius: "15px",
-                  backgroundColor: "rgba(57, 192, 237,.2)",
-                }}
-              >
-                <p className="small mb-0">
-                  Hello and thank you for visiting MDBootstrap. Please click
-                  the video below.
-                </p>
-              </div>
-            </div>
-
-            <div className="d-flex flex-row justify-content-end mb-4">
-              <div
-                className="p-3 me-3 border"
-                style={{ borderRadius: "15px", backgroundColor: "#fbfbfb" }}
-              >
-                <p className="small mb-0">
-                  Thank you, I really like your product.
-                </p>
-              </div>
-              <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-                alt="avatar 1"
-                style={{ width: "40px", height: "100%" }}
-              />
-            </div>
-
-            <div className="d-flex flex-row justify-content-start mb-4">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                alt="avatar 1"
-                style={{ width: "40px", height: "100%" }}
-              />
-              <div className="ms-3" style={{ borderRadius: "15px" }}>
-                <div className="bg-image">
-                  <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/screenshot1.webp"
-                    style={{ borderRadius: "15px" }}
-                    alt="video"
-                  />
-                  <a href="#!">
-                    <div className="mask"></div>
-                  </a>
+            <ScrollArea style={{ position: "relative", height: "400px" }}>
+                {messages.length && messages.map((data, key) =>
+                  (data.userId._id !== userId) 
+                  ? <div className="d-flex flex-row justify-content-start" key={key}>
+                      <img
+                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                        alt="avatar 1"
+                        style={{ width: "45px", height: "100%" }}
+                      />
+                      <div>
+                        <p
+                          className="small p-2 ms-3 mb-1 rounded-3"
+                          style={{ backgroundColor: "#f5f6f7" }}
+                        >
+                          {data.message}
+                        </p>
+                        <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
+                          {dayjs(data.createdAt).hour()} | {dayjs(data.createdAt).month()} {dayjs(data.createdAt).day()}
+                        </p>
+                      </div>
+                    </div>
+                  :
+                    <div className="d-flex flex-row justify-content-end" key={key}>
+                      <div>
+                        <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
+                          {data.message}
+                        </p>
+                        <p className="small me-3 mb-3 rounded-3 text-muted">
+                          {dayjs(data.createdAt).hour()} | {dayjs(data.createdAt).month()} {dayjs(data.createdAt).day()}
+                        </p>
+                      </div>
+                      <img
+                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                        alt="avatar 1"
+                        style={{ width: "45px", height: "100%" }}
+                      />
+                    </div>
+                )}
+              </ScrollArea>
+              <div className="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
+                <div className="social__links d-flex gap-3 align-items-center ">
+                  <span>
+                    <a href="https://instagram.com/flembee.tech" target="blank">
+                      <i className="ri-attachment-line"></i>
+                    </a>
+                  </span>
+                  <span>
+                    <a href="https://www.linkedin.com/company/flembee" target="blank">
+                      <i className="ri-emotion-happy-line"></i>
+                    </a>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  className="form-control form-control-lg ms-3"
+                  id="exampleFormControlInput2"
+                  placeholder="Type message"
+                  style={{backgroundColor: 'mistyrose'}}
+                />
+                <div className="social__links d-flex gap-3 ms-3 align-items-center ">
+                  <span>
+                    <a href="https://twitter.com/flembee_tech" target="blank">
+                      <i className="ri-send-plane-line"></i>
+                    </a>
+                  </span>
                 </div>
               </div>
-            </div>
-
-            <div className="d-flex flex-row justify-content-start mb-4">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                alt="avatar 1"
-                style={{ width: "40px", height: "100%" }}
-              />
-              <div
-                className="p-3 ms-3"
-                style={{
-                  borderRadius: "15px",
-                  backgroundColor: "rgba(57, 192, 237,.2)",
-                }}
-              >
-                <p className="small mb-0">...</p>
-              </div>
-            </div>
-
-            <div className="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
-            <div className="social__links d-flex gap-3 align-items-center ">
-              <span>
-                <a href="https://instagram.com/flembee.tech" target="blank">
-                  <i className="ri-attachment-line"></i>
-                </a>
-              </span>
-              <span>
-                <a href="https://www.linkedin.com/company/flembee" target="blank">
-                  <i className="ri-emotion-happy-line"></i>
-                </a>
-              </span>
-            </div>
-            <input
-              type="text"
-              className="form-control form-control-lg ms-3"
-              id="exampleFormControlInput2"
-              placeholder="Type message"
-              style={{backgroundColor: 'mistyrose'}}
-            />
-            <div className="social__links d-flex gap-3 ms-3 align-items-center ">
-              <span>
-                <a href="https://twitter.com/flembee_tech" target="blank">
-                  <i className="ri-send-plane-line"></i>
-                </a>
-              </span>
-            </div>
-          </div>
           </CardBody>
         </Card>
       </Col>
