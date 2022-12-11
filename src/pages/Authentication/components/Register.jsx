@@ -1,12 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { useDispatch } from 'react-redux';
 
 import { Col, Button, Card, InputGroup, CardTitle, CardBody } from "reactstrap";
 
+import { registerUser } from '../../../redux/actions';
+
 export function Register ({setLoginFormVisible}) {  
 
-    const signUp = () => {
+    const dispatch = useDispatch();
 
-      };
+   const [isSignUpEmpty, setIsSignUpEmpty] = useState(false);
+
+    const [signUpForm, setSignUpForm] = useState({
+        name:'',
+        email:'',
+        password:'',
+        repeatPassword:'',
+    });
+
+    const handleSignUpChange = (e) => {
+        const {name, value} = e.target;
+    
+        setSignUpForm((prev) => {
+          prev[name] = value;
+    
+          return prev;
+        });
+    };
+      
+    const onSignUp = () => {
+        const { name, email, password, repeatPassword } = signUpForm;
+
+        if(!name || !email || !password){
+        setIsSignUpEmpty(true);
+        }else{
+
+        if(password !== repeatPassword) { 
+            console.log("Not equal")
+        }
+        else{
+            dispatch(registerUser({ name, email, password }));
+        }
+        } 
+    };
 
   return (
     <Col md="6" lg="5" xl="4">
@@ -22,8 +59,13 @@ export function Register ({setLoginFormVisible}) {
                     className="form-control rounded ms-3"
                     placeholder="Your name..."
                     type="name"
-                    onChange={(e) => ""}
+                    name="name"
                     style={{ backgroundColor: "#f5f6f7" }}
+                    onClick={() =>{
+                        if(isSignUpEmpty)
+                            setSignUpForm(false);
+                    }}
+                    onChange={handleSignUpChange}
                 />
                 <div className="social__links d-flex gap-3 ms-1 me-3 align-items-center ">
                     <span className="ms-1 text-muted" href="/">
@@ -36,8 +78,13 @@ export function Register ({setLoginFormVisible}) {
                     className="form-control rounded ms-3"
                     placeholder="Enter email..."
                     type="email"
-                    onChange={(e) => ""}
+                    name="email"
                     style={{ backgroundColor: "#f5f6f7" }}
+                    onClick={() =>{
+                        if(isSignUpEmpty)
+                            setSignUpForm(false);
+                    }}
+                    onChange={handleSignUpChange}
                 />
                 <div className="social__links d-flex gap-3 ms-1 me-3 align-items-center ">
                     <span className="ms-1 text-muted" href="/">
@@ -50,8 +97,13 @@ export function Register ({setLoginFormVisible}) {
                     className="form-control rounded ms-3"
                     placeholder="Enter password..."
                     type="password"
-                    onChange={(e) => ""}
+                    name="password"
                     style={{ backgroundColor: "#f5f6f7" }}
+                    onClick={() =>{
+                        if(isSignUpEmpty)
+                            setSignUpForm(false);
+                    }}
+                    onChange={handleSignUpChange}
                 />
                 <div className="social__links d-flex gap-3 ms-1 me-3 align-items-center ">
                     <span className="ms-1 text-muted" href="/">
@@ -61,11 +113,16 @@ export function Register ({setLoginFormVisible}) {
             </InputGroup>
             <InputGroup className="rounded mb-3">
             <input
-              className="form-control rounded ms-3"
-              placeholder="Repeat password..."
-              type="password"
-              onChange={(e) => ""}
-              style={{ backgroundColor: "#f5f6f7" }}
+                className="form-control rounded ms-3"
+                placeholder="Repeat password..."
+                type="password"
+                name="repeatPassword"
+                style={{ backgroundColor: "#f5f6f7" }}
+                onClick={() =>{
+                if(isSignUpEmpty)
+                    setSignUpForm(false);
+                }}
+                onChange={handleSignUpChange}
             />
             <div className="social__links d-flex gap-3 ms-1 me-3 align-items-center ">
               <span className="ms-1 text-muted" href="/">
@@ -74,7 +131,7 @@ export function Register ({setLoginFormVisible}) {
             </div>
           </InputGroup>
             <div className="d-flex justify-content-center mt-4">
-                <Button color="primary" onClick={() => signUp()} >Sign up</Button>
+                <Button color="primary" onClick={() => onSignUp()} >Sign up</Button>
             </div>
             <div 
                 className="d-flex justify-content-center mt-4" 

@@ -1,12 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { useDispatch } from 'react-redux';
 
 import { Col, Button, Card, InputGroup, CardTitle, CardBody } from "reactstrap";
 
+import { loginUser } from '../../../redux/actions';
+
 export function Login ({setLoginFormVisible}) {  
 
-    const signIn = () => {
+  const dispatch = useDispatch();
 
-      };
+  const [isSignInEmpty, setIsSignInEmpty] = useState(false);
+
+  const [signInForm, setSignInForm] = useState({
+    email:'',
+    password:'',
+    });
+
+  const handleSignInChange = (e) => {
+    const {name, value} = e.target;
+
+    setSignInForm((prev) => {
+      prev[name] = value;
+
+      return prev;
+    });
+  };
+
+  const onSignIn = () => {
+    const { email, password } = signInForm;
+
+    if(!email || !password){
+      setIsSignInEmpty(true);
+    }else{
+      dispatch(loginUser({ email, password }));
+    }  
+  };
 
   return (
     <Col md="6" lg="5" xl="4">
@@ -22,8 +51,13 @@ export function Login ({setLoginFormVisible}) {
               className="form-control rounded ms-3"
               placeholder="Enter email..."
               type="email"
-              onChange={(e) => ""}
+              name="email"
               style={{ backgroundColor: "#f5f6f7" }}
+              onClick={() =>{
+                if(isSignInEmpty)
+                    setIsSignInEmpty(false);
+              }}
+              onChange={handleSignInChange}
             />
             <div className="social__links d-flex gap-3 ms-1 me-3 align-items-center ">
               <span className="ms-1 text-muted" href="/">
@@ -36,8 +70,13 @@ export function Login ({setLoginFormVisible}) {
               className="form-control rounded ms-3"
               placeholder="Enter password..."
               type="password"
-              onChange={(e) => ""}
+              name="password"
               style={{ backgroundColor: "#f5f6f7" }}
+              onClick={() =>{
+                if(isSignInEmpty)
+                    setIsSignInEmpty(false);
+              }}
+              onChange={handleSignInChange}
             />
             <div className="social__links d-flex gap-3 ms-1 me-3 align-items-center ">
               <span className="ms-1 text-muted" href="/">
@@ -46,7 +85,7 @@ export function Login ({setLoginFormVisible}) {
             </div>
           </InputGroup>
           <div className="d-flex justify-content-center mt-4">
-            <Button color="primary" onClick={() => signIn()} >Sign in</Button>
+            <Button color="primary" onClick={() => onSignIn()} >Sign in</Button>
           </div>
           <div 
             className="d-flex justify-content-center mt-4" 
