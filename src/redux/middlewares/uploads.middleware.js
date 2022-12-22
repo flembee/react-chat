@@ -8,8 +8,6 @@ import {
     xhrRequest,
     showMessageLoading,
     hideMessage,
-    errorCreateNotification,
-    clearNotification,
 } from '../actions';
 
 import { getStorage } from '../../helpers';
@@ -50,8 +48,6 @@ export const uploadImageSuccess = ({ dispatch }) => (next) => (
 export const uploadImageError = ({ dispatch }) => (next) => (action) => {
     next(action);
     if (action.type === UPLOAD_IMAGE_ERROR) {
-        dispatch(errorCreateNotification());
-        dispatch(clearNotification());
     }
 };
 

@@ -12,6 +12,10 @@ import {
   getMessageProcess
 } from '../../redux/actions';
 
+import { getStorage } from '../../helpers';
+
+const currentUser = getStorage.user();
+
 const contacts =[
   {
     avatar: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp",
@@ -63,7 +67,7 @@ export function Chat() {
 
     const [isMobile, setIsMobile] = useState(false)
 
-    const userId = "635980d3aa69be4f60e32866";
+    const userId = currentUser.id;
 
     const {
       singleChannel,
@@ -77,6 +81,7 @@ export function Chat() {
       userContacts,
     } = useSelector((state) => state.user);
 
+
     useEffect(() => {
       let isMounted = true;
 
@@ -86,7 +91,7 @@ export function Chat() {
       return () => {
           isMounted = false;
       };
-    }, [dispatch]);
+    }, [dispatch, userId]);
 
     useEffect(() => {
       let isMounted = true;
@@ -97,7 +102,7 @@ export function Chat() {
       return () => {
           isMounted = false;
       };
-    }, [dispatch]);
+    }, [dispatch, userId]);
 
     useEffect(() => {
       let isMounted = true;
@@ -141,7 +146,7 @@ export function Chat() {
     return (
       <Container style={{marginTop: "6rem", marginBottom: "8rem"}}>
         {
-          singleChannel && singleChannel.length && renderView()
+          renderView()
         }
       </Container>
     );

@@ -7,8 +7,8 @@ import { Authentication, Chat } from "../pages";
 const Routers = () => {
   return (
     <Routes>
-      <Route path="/" element={<Authentication />} />
-      <Route path="/" element={<Chat />} />
+      <Route path="/login" element={<Authentication />} />
+      <Route path="/chat" element={<Chat />} />
     </Routes>
   );
 };

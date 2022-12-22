@@ -20,10 +20,6 @@ import {
 
 import {
     apiRequest,
-    errorCreateNotification,
-    errorUpdateNotification,
-    errorDeleteNotification,
-    clearNotification,
     showMessageLoading, 
     hideMessage,
     deleteChannelModalClose
@@ -145,8 +141,6 @@ export const deleteChannelsSuccess = ({ dispatch }) => (next) => (
 export const deleteChannelsError = ({ dispatch }) => (next) => (action) => {
     next(action);
     if (action.type === DELETE_CHANNELS_ERROR) {
-        dispatch(errorDeleteNotification(action.payload));
-        dispatch(clearNotification());
     }
 };
 
@@ -163,8 +157,6 @@ export const createdChannelSuccess = ({ dispatch }) => (next) => (
 export const createdChannelError = ({ dispatch }) => (next) => (action) => {
     next(action);
     if (action.type === CREATE_CHANNEL_ERROR) {
-        dispatch(errorCreateNotification());
-        dispatch(clearNotification());
     }
 };
 
@@ -181,8 +173,6 @@ export const updatedChannelSuccess = ({ dispatch }) => (next) => (
 export const updatedChannelError = ({ dispatch }) => (next) => (action) => {
     next(action);
     if (action.type === UPDATE_CHANNEL_ERROR) {
-        dispatch(errorUpdateNotification());
-        dispatch(clearNotification());
     }
 };
 

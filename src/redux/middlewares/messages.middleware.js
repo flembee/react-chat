@@ -20,10 +20,6 @@ import {
 
 import {
     apiRequest,
-    errorCreateNotification,
-    errorUpdateNotification,
-    errorDeleteNotification,
-    clearNotification,
     showMessageLoading, 
     hideMessage,
     deleteMessageModalClose
@@ -145,8 +141,6 @@ export const deleteMessagesSuccess = ({ dispatch }) => (next) => (
 export const deleteMessagesError = ({ dispatch }) => (next) => (action) => {
     next(action);
     if (action.type === DELETE_MESSAGES_ERROR) {
-        dispatch(errorDeleteNotification(action.payload));
-        dispatch(clearNotification());
     }
 };
 
@@ -163,8 +157,6 @@ export const createdMessageSuccess = ({ dispatch }) => (next) => (
 export const createdMessageError = ({ dispatch }) => (next) => (action) => {
     next(action);
     if (action.type === CREATE_MESSAGE_ERROR) {
-        dispatch(errorCreateNotification());
-        dispatch(clearNotification());
     }
 };
 
@@ -181,8 +173,6 @@ export const updatedMessageSuccess = ({ dispatch }) => (next) => (
 export const updatedMessageError = ({ dispatch }) => (next) => (action) => {
     next(action);
     if (action.type === UPDATE_MESSAGE_ERROR) {
-        dispatch(errorUpdateNotification());
-        dispatch(clearNotification());
     }
 };
 
